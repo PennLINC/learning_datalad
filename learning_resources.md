@@ -3,6 +3,7 @@
 Use them wisely: know when each of them will be helpful
 
 * YouTube workshop videos by Adina
+    * This is the [website for this workshop](https://psychoinformatics-de.github.io/rdm-course/)
     * This is the [GitHub repo for the course materials](https://github.com/datalad-handbook/datalad-course/tree/main/html)
 * DataLad tutorials - follow it and learn! (Sydney recommends it - where can i find it?)
 * PennLINC dataclub - 2022/3/30 by Sydney and Matt
