@@ -1,5 +1,12 @@
 # This markdown file lists the basic datalad functions
 
+## Very basic and useful commands
+
+* `datalad status`: similar to `git status`
+    * `datalad status --annex all`: also print out present vs total size of the dataset, i.e., some data content has been dropped
+* `tig`: view the datalad history. 
+    * View the detailed history of a commit by hitting "Enter". Go up level or exit by hitting "q"
+
 
 ## create a DataLad dataset
 
@@ -15,6 +22,20 @@ datalad run \
     -m "your message" \
     <your command as normal> {inputs} {outputs}    # no need to repeat inputs and outputs again!
 ```
+
+## `datalad drop` --> `datalad get`
+If the data was got by `datalad` function, e.g., `datalad download-url`, then the file content can be dropped, but the information about its presence and history are maintained. 
+
+However, for file got by manual way (not `datalad` command) + `datalad save` probably cannot apply`datalad drop`, otherwise probably faced with an error .
+
+`datalad drop <filename>`
+
+Now, the file cannot be accessed as a regular file.
+
+If you want to get the content back and make the file as a regular one:
+
+`datalad get <filename>`
+
 
 ## `datalad save`
 If you change something by plain command (instead of `datalad run`), do:
