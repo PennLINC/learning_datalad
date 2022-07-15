@@ -26,8 +26,14 @@ datalad run \
     --input <a list of input files> \
     --output <output filename> \
     -m "your message" \
-    <your command as normal> {inputs} {outputs}    # no need to repeat inputs and outputs again!
+    "<your command as normal> --myInputs {inputs} --myOutputs {outputs}"    # no need to repeat inputs and outputs again! Note: sometimes need to quote ("") this line | change arguments "--myInputs" etc as appropriate
 ```
+
+More notes:
+* To view the expanded command (with {inputs} and {outputs} filled in) looks good to you or not before really running it, you can add `--dry-run basic` after `datalad run`. This will not actually execute the command
+* If there is subdataset in current dataset, make sure explicitly specify the dataset this history will go to, by adding `-d <which_dataset>`
+    * If it's current dataset: `-d .`
+    * If it's the subdataset, e.g., called "inputs": `-d inputs`
 
 ## Drop the content: `datalad drop` --> `datalad get`
 If the data was got by `datalad` function, e.g., `datalad download-url`, then the file content can be dropped, but the information about its presence and history are maintained. 
@@ -66,6 +72,19 @@ You need to `git revert` now:
     * `--no-edit` means using the default commit message `Revert "xxxx"`; otherwise, you will be asked to edit the commit message
 * (optional) remove recent commits by `git reset ???` # TODO
 
+# Collaborate with more than one copy of dataset
+Summary: ref: [rmd workshop by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/03-remote-collaboration/index.html#interim-summary-interacting-with-remote-datasets)
+
+A different place = another storage, GitHub, [GIN](https://gin.g-node.org), cloud, etc
+
+* A different place --> Your workstation:    Consume existing datasets and stay up-to-date
+    * `datalad clone`:  consume an existing dataset
+    * `datalad update`: keep siblings in sync
+* Your workstation --> A different place:   Create sibling datasets to publish to or update from
+    * `datalad create-sibling`: create a sibling dataset to publish or update from
+    * `datalad push`:   publish the dataset
+* local --> a different place
+
 
 ## Publish dataset: `datalad create-sibling` --> `datalad push`
 e.g., to GIN - ref: [rdm workshop by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/03-remote-collaboration/index.html#publishing-to-gin-datalad-push)
@@ -89,9 +108,11 @@ Act like a data consumer.
 Assume: original copy --> gin --> another copy
 
 * In the original dataset, make some actions with `datalad run`;
-* push to remote: `datalad push --to <e.g., gin>`
+* push to remote: `datalad push --to <somewhere>`
+    * `<somewhere>` = gin, origin, etc
 * cd to "another copy": `datalad update -s origin --how merge`
 
+# Reproduce
 ## Rerun
 `datalad rerun <shasum>`
 
@@ -100,3 +121,6 @@ Notes:
 
 * The file content of the input file does not need to be `get` first; `datalad rerun` will handle it.
 * Basically `datalad rerun` also does the same steps as `datalad run` = get inputs + unlock outputs + change + save
+
+# Subdatasets
+ a superdataset does not record individual changes within the subdataset, it only records the state of the subdataset.  In other words, it points to the subdataset location and a point in its life (indicated by a specific commit).

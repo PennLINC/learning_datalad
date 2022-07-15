@@ -14,3 +14,8 @@ After replacing with the valid file, make sure you `datalad save`.
 ### output file: Permission denined
 e.g., PermissionError: [Errno 13] Permission denied: <output_filename>
 
+## Collaboration
+### when `datalad push --to gin`, it's stuck (percent < 100%)
+e.g., Update availability for 'gin':  75%|█████████████████▎     | 3.00/4.00
+
+If you are using vscode, check if there is a pop out window at the upper band of vscode! It's waiting for you to enter the username and password for GIN [facepalm]
