@@ -44,6 +44,8 @@ cd ds
 # this remote is never fetched, it accumulates a larger number of branches
 # and we want to avoid progressive slowdown. Instead we only ever push
 # a unique branch per each job (subject AND process specific name)
+# --> FAIRly big paper: register location for result deposition, separate from the input source for performance reasons only
+# `git remote add <give a name> <folder where the remote is>` is to add a new remote to your git repo
 git remote add outputstore "$pushgitremote"
 
 # all results of this job will be put into a dedicated branch
@@ -57,11 +59,13 @@ git checkout -b "${BRANCH}"
 datalad get -n "inputs/data/${subid}"
 
 # Reomve all subjects we're not working on
+# `grep -v` means revert matching, i.e., `rm -rf` all folders with `sub*` except those matching current `$subid`
 (cd inputs/data && rm -rf `find . -type d -name 'sub*' | grep -v $subid`)
 
 # ------------------------------------------------------------------------------
 # Do the run!
-
+# --> FAIRly big paper: datalad containers-run executes the `*_zip.sh`. specified inputs are auto-obtained, specified outputs are unlocked and saved with provenance record
+# `--explicit`: does not require a clean dataset (can be dirty and won't warn) - NOTES: WHAT DOES THIS MEAN????
 datalad run \
     -i code/fmriprep_zip.sh \
     -i inputs/data/${subid}/${sesid}\
@@ -73,9 +77,11 @@ datalad run \
     -m "fmriprep:20.2.3 ${subid} ${sesid}" \
     "bash ./code/fmriprep_zip.sh ${subid} ${sesid}"
 
+# push:
 # file content first -- does not need a lock, no interaction with Git
-datalad push --to output-storage
+datalad push --to output-storage  # ?????????? when did this `output-storage` get configured and defined??
 # and the output branch
+# --> FAIRly big paper: push branch with provenance records needs a global lock to prevent write conflicts
 flock $DSLOCKFILE git push outputstore
 
 echo TMPDIR TO DELETE
