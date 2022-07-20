@@ -1,0 +1,20 @@
+Submitted first 30 jobs:
+
+
+fpsub-A00010893_ses-BAS1: no T1w images, confirmed
+fpsub-A00031145_ses-BAS1: no BOLD images, confirmed
+fpsub-A00028522_ses-BAS1: no BOLD images, confirmed
+fpsub-A00031166_ses-BAS1: no BOLD images, confirmed
+fpsub-A00027439_ses-BAS1: no T1w images, confirmed (has anat folder, but no files in it; it's a longitudinal subject and has anat files in other sessions)
+fpsub-A00028340_ses-BAS1: no T1w images, confirmed
+
+-> delete above jobs from `qsub_calls_full.sh`
+line #6, #12, #19, #24, #25, #26
+
+other 24 jobs:
+launch status = 100, meaning that SGE could not begin the job, for example, if the submission script request 500CPUs. 
+
+
+
+job #3-#8 from the bottom:
+sub-A00083827-ses-BAS1: no T1w images

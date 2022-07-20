@@ -79,7 +79,7 @@ datalad run \
 
 # push:
 # file content first -- does not need a lock, no interaction with Git
-datalad push --to output-storage  # ?????????? when did this `output-storage` get configured and defined??
+datalad push --to output-storage  # `output-storage`: defined when bootstrap.sh: `datalad create-sibling-ria`
 # and the output branch
 # --> FAIRly big paper: push branch with provenance records needs a global lock to prevent write conflicts
 flock $DSLOCKFILE git push outputstore

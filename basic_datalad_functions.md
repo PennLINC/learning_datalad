@@ -124,3 +124,13 @@ Notes:
 
 # Subdatasets
  a superdataset does not record individual changes within the subdataset, it only records the state of the subdataset.  In other words, it points to the subdataset location and a point in its life (indicated by a specific commit).
+
+ # How to view previous versions of files and dataset?
+ ref: [Datalad Handbook](http://handbook.datalad.org/en/latest/basics/101-137-history.html#viewing-previous-versions-of-files-and-datasets)
+ * Option 1: 
+    * git log -n <number of history> --oneline   # find the <shasum> you want to go to
+    * `git checkout <shasum>`
+    * view something via e.g., `tail <filename>`
+    * `git checkout master`   # return
+* Option 2: 
+    * `git cat-file --textconv SHASUM:<path/to/file>`  # please check out the notes on the DataLad handbook for this option!
