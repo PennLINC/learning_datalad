@@ -40,6 +40,8 @@ If the data was got by `datalad` function, e.g., `datalad download-url`, then th
 
 However, for file got by manual way (not `datalad` command) + `datalad save` probably cannot apply`datalad drop`, otherwise probably faced with an error .
 
+Another situation where `datalad drop` fails, is when there is no other copy of a file elsewhere.
+
 `datalad drop <filename>`
 
 Now, the file cannot be accessed as a regular file.
@@ -52,6 +54,18 @@ If you want to get the content back and make the file as a regular one:
 ## Commit: `datalad save`
 If you change something by plain command (instead of `datalad run`), do:
 `datalad save -m "your message"`
+
+## Remove datasets: `datalad remove`
+ref: [rdm-course by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/92-filesystem-operations/index.html)
+
+`datalad remove` is the antagonist command to `datalad get`
+
+```
+datalad siblings    # check if it has a sibling & this sibling has all commits that the local dataset has, too. Otherwise `datalad remove` will fail.
+
+cd ..   # get outside of the dataset you want to remove
+datalad remove -d <path to the dataset you want to remove>
+```
 
 
 ## How to "undo" a step?
@@ -92,7 +106,7 @@ e.g., to GIN - ref: [rdm workshop by Adina 2022](https://psychoinformatics-de.gi
 1. create an empty repo & set up `datalad siblings`
 1. `datalad push` 
 
-## Clone data with `datalad clone` --> `datalad get`
+## Clone data with `datalad clone` --> `datalad get` --> (optional) `datalad unlock`
 Act like a data consumer.
 
 1. `datalad clone <url> <local_foldername>`
@@ -102,6 +116,19 @@ Act like a data consumer.
     * check where the file content is:
         * `git annex whereis <filename>`
 2. `cd <into_root_path_ds>`, then `datalad get <filename>`
+    * by now, you got the file content
+    * however, currently the file content are at `.git/annex`, and the "files" are still symlinks to `.git/annex`
+        * if files are photos, you can view them as usual (symlinked to the actual content)
+        * but because of git-annex, the files are write-protected
+3. (optional) `datalad unlock <filename>` so that files look like "regular files" without symlinks
+    * but you removed the write-protection!
+
+| command      | `datalad clone` | `datalad get`     | `datalad unlock` |
+| :---        |    :----:   |          :---: | :---: |
+| Copied file content?      | not yet       | yes, at `.git/annex`   | yes |
+| Files appear as symlinks? (`tree <folder/filename>`)   | yes        | still yes | not anymore - appear as regular files |
+| write protection? | - | yes! | nope, just as regular files |
+
 
 ## Update the dataset / keep siblings in sync: `datalad update`
 

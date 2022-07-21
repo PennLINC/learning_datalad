@@ -48,7 +48,7 @@ done
 git push
 
 # Get the file availability info
-git annex fsck --fast -f output-storage    # CHENYING: WHERE IS THE `output-storage`????
+git annex fsck --fast -f output-storage    
 
 # This should not print anything
 MISSING=$(git annex find --not --in output-storage)
@@ -62,6 +62,7 @@ fi
 # stop tracking this branch
 git annex dead here
 
+# --> FAIRly big paper: push consolidated provenance records and file availability metadata to permanent storage
 datalad push --data nothing
 echo SUCCESS
 
