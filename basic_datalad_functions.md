@@ -4,13 +4,13 @@
 
 * `datalad status`: similar to `git status`
     * `datalad status --annex all`: also print out present vs total size of the dataset, i.e., some data content has been dropped
+    * `du -sh <folder/filename>` to print the folder or file size. Can also do: `du -sh *` to list all folders/files in the current directory
 * `tig`: view the datalad history. 
     * View the detailed history of a commit by hitting "Enter". Go up level or exit by hitting "q"
 * `tree`
 * list siblings of a datalad dataset - assuming you're in a datalad-ds:
     * `datalad siblings`; Or:
     * `git remote -v`
-
 
 ## Create a DataLad dataset
 
@@ -55,11 +55,18 @@ If you want to get the content back and make the file as a regular one:
 If you change something by plain command (instead of `datalad run`), do:
 `datalad save -m "your message"`
 
-## Remove datasets: `datalad remove`
+## Remove a dataset or components from a dataset: `datalad remove`
 ref: [rdm-course by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/92-filesystem-operations/index.html)
 
 `datalad remove` is the antagonist command to `datalad get`
 
+### Remove a file from a dataset:
+`datalad remove <path/to/file>`
+
+If there is no other copies of this file elsewhere, it will throw out an error. If you're very sure to move it, add `--nocheck`.
+
+
+### Remove a dataset:
 ```
 datalad siblings    # check if it has a sibling & this sibling has all commits that the local dataset has, too. Otherwise `datalad remove` will fail.
 
@@ -109,7 +116,18 @@ e.g., to GIN - ref: [rdm workshop by Adina 2022](https://psychoinformatics-de.gi
 ## Clone data with `datalad clone` --> `datalad get` --> (optional) `datalad unlock`
 Act like a data consumer.
 
-1. `datalad clone <url> <local_foldername>`
+1. `datalad clone <url/local dir> <local_foldername>`
+    * `url/local dir` = 
+        * If it's RIA store: using:
+            * `ria+http://<url>#~<alias name>` 
+            * `ria+file://<folderpath>#~<alias name>`, for example `ria+file:///cbica/projects/xxx/xxx/qsiprep/output_ria#~data`
+            * here the `<alias name>` = the foldername in `<folderpath>/alias`
+        * If it's just a datalad dataset on the same machine, e.g., on cubic:
+            * simply use the `<path/to/folder>`, without anything more!
+            * e.g., `/cbica/projects/xxx/raw_bids/`
+        * If it's just a datalad dataset on the internet, just provide the url:
+            * e.g., `https://github.com/datalad-datasets/longnow-podcasts.git`
+            * e.g., `http://example.com/dataset`
     * `local_foldername` is for the foldername that will be created and where the cloned data will be. This is different from `git clone` where this isn't specified, and the same dataset name will be used as the foldername.
     * notice that by now the annexed content hasn't been downloaded.
         * `datalad status --annex all` to check how much data size downloaded - make sure `cd <into_root_path_ds>` first
@@ -122,13 +140,14 @@ Act like a data consumer.
         * but because of git-annex, the files are write-protected
 3. (optional) `datalad unlock <filename>` so that files look like "regular files" without symlinks
     * but you removed the write-protection!
+    * After unlocking, it's important to do `datalad save` to lock again!!
 
 | command      | `datalad clone` | `datalad get`     | `datalad unlock` |
 | :---        |    :----:   |          :---: | :---: |
 | Copied file content?      | not yet       | yes, at `.git/annex`   | yes |
 | Files appear as symlinks? (`tree <folder/filename>`)   | yes        | still yes | not anymore - appear as regular files |
 | write protection? | - | yes! | nope, just as regular files |
-
+| antagonist | `datalad remove` | `datalad drop` | `datalad save` (kind of; will lock it) |
 
 ## Update the dataset / keep siblings in sync: `datalad update`
 

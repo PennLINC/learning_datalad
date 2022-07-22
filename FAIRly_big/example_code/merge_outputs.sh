@@ -9,13 +9,26 @@ NBRANCHES=$(git branch -a | grep job- | sort | wc -l)
 echo "Found $NBRANCHES branches to merge"
 
 gitref=$(git show-ref master | cut -d ' ' -f1 | head -n 1)
+# Chenying: ^^^ should be main instead of master!! 
+# TODO: check which give non-empty results, `main`, or `master`
+# What does it do: 
+# `git show-ref main` gives:
+  # 6e5c94caa9d353838e84494c6eb0cacc8392e1c2 refs/heads/main
+  # 6e5c94caa9d353838e84494c6eb0cacc8392e1c2 refs/remotes/origin/main
+# then `cut -d ' ' -f1` gives:   # actually can be replaced by `git show-ref main --hash`
+  # 6e5c94caa9d353838e84494c6eb0cacc8392e1c2
+  # 6e5c94caa9d353838e84494c6eb0cacc8392e1c2
+# then `head -n 1` return the first string
+
 
 # query all branches for the most recent commit and check if it is identical.
 # Write all branch identifiers for jobs without outputs into a file.
 for i in $(git branch -a | grep job- | sort); do [ x"$(git show-ref $i \
   | cut -d ' ' -f1)" = x"${gitref}" ] && \
   echo $i; done | tee code/noresults.txt | wc -l
-
+# Note: ^^ for each branch, check if its hash is the same as the main's hash; 
+  # if so, this branch does not have results --> echo & save to `code/noresults.txt`
+  # if not equal, this branch has results --> echo & save to `code/has_results.txt` (see below)
 
 for i in $(git branch -a | grep job- | sort); \
   do [ x"$(git show-ref $i  \
