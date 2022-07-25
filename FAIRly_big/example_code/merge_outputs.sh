@@ -10,6 +10,7 @@ echo "Found $NBRANCHES branches to merge"
 
 gitref=$(git show-ref master | cut -d ' ' -f1 | head -n 1)
 # Chenying: ^^^ should be main instead of master!! 
+# Matt: it depends. Git probably hasn't changed to main, only github. Do: check the git track branch name by a command to figure out whether its main or master
 # TODO: check which give non-empty results, `main`, or `master`
 # What does it do: 
 # `git show-ref main` gives:
@@ -37,14 +38,14 @@ for i in $(git branch -a | grep job- | sort); \
 done | tee code/has_results.txt
 
 mkdir -p code/merge_batches
-num_branches=$(wc -l < code/has_results.txt)
+num_branches=$(wc -l < code/has_results.txt)   # count lines
 CHUNKSIZE=5000
-set +e
+set +e   # okay even errors
 num_chunks=$(expr ${num_branches} / ${CHUNKSIZE})
 if [[ $num_chunks == 0 ]]; then
     num_chunks=1
 fi
-set -e
+set -e   # if there is error, exit
 for chunknum in $(seq 1 $num_chunks)
 do
     startnum=$(expr $(expr ${chunknum} - 1) \* ${CHUNKSIZE} + 1)
