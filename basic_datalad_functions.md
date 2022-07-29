@@ -4,10 +4,18 @@
 
 * `datalad status`: similar to `git status`
     * `datalad status --annex all`: also print out present vs total size of the dataset, i.e., some data content has been dropped
+    * `git status` can also show some status information
+    * `datalad -e <"commit" or "no">`: to speed up `datalad status` for deep dataset hierarchies/large datasets: not to comprehensively check subdataset. See more [here](http://handbook.datalad.org/en/latest/basics/101-146-gists.html#speed-up-status-reports-in-large-datasets).
     * `du -sh <folder/filename>` to print the folder or file size. Can also do: `du -sh *` to list all folders/files in the current directory
 * `tig`: view the datalad history. 
     * View the detailed history of a commit by hitting "Enter". Go up level or exit by hitting "q"
+    * `git show`: show the last save/commit
+    * `git log -n <a number>`: print the last n commits
+    * Find the commit (including all provenance) related to a file: `git log <path/to/file>`
+        * For a subdataset, make sure you cd into that subdataset, before running this command (otherwise getting empty results)
 * `tree`
+    * If you don't want to see the long symlinks, use `ls`, without adding `-l`
+* `datalad <function name> -h` or `--help` for how to use
 * list siblings of a datalad dataset - assuming you're in a datalad-ds:
     * `datalad siblings`; Or:
     * `git remote -v`
@@ -58,7 +66,7 @@ If you change something by plain command (instead of `datalad run`), do:
 ## Remove a dataset or components from a dataset: `datalad remove`
 ref: [rdm-course by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/92-filesystem-operations/index.html)
 
-`datalad remove` is the antagonist command to `datalad get`
+`datalad remove` is the antagonist command to `datalad clone`
 
 ### Remove a file from a dataset:
 `datalad remove <path/to/file>`
@@ -91,7 +99,7 @@ You need to `git revert` now:
 * `tig`: e.g., top commit is the one you want to "undo" - the commit hash displays at the bottom of the window - copy the first 7 char out
 * `git revert --no-edit <commit_hash>`
     * `--no-edit` means using the default commit message `Revert "xxxx"`; otherwise, you will be asked to edit the commit message
-* (optional) remove recent commits by `git reset ???` # TODO
+* (optional) remove recent commits by `git reset`. Example see the last command in [this section in DataLad Handbook](http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html#renaming-files)
 
 # Collaborate with more than one copy of dataset
 Summary: ref: [rmd workshop by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/03-remote-collaboration/index.html#interim-summary-interacting-with-remote-datasets)
@@ -133,6 +141,7 @@ Act like a data consumer.
         * `datalad status --annex all` to check how much data size downloaded - make sure `cd <into_root_path_ds>` first
     * check where the file content is:
         * `git annex whereis <filename>`
+    * additional argument: if you want to clone a dataset as subdataset: add `-d .` meaning clone this new dataset as subdataset of the current datatset
 2. `cd <into_root_path_ds>`, then `datalad get <filename>`
     * by now, you got the file content
     * however, currently the file content are at `.git/annex`, and the "files" are still symlinks to `.git/annex`
@@ -158,6 +167,10 @@ Assume: original copy --> gin --> another copy
     * `<somewhere>` = gin, origin, etc
 * cd to "another copy": `datalad update -s origin --how merge`
 
+Compared to Git: # ref: [DataLad Handbook](http://handbook.datalad.org/en/latest/basics/101-119-sharelocal4.html)
+* `datalad update` ~ `git fetch`
+* `datalad update --merge` ~ `git pull`
+
 # Reproduce
 ## Rerun
 `datalad rerun <shasum>`
@@ -169,6 +182,12 @@ Notes:
 * Basically `datalad rerun` also does the same steps as `datalad run` = get inputs + unlock outputs + change + save
 
 # Subdatasets
+PLEASE BE AWARE that if you are dealing with a subdataset within a superdataset, there are several things that you might be confused "why this command does not work?!" although the command works for a regular dl dataset.
+
+## DEBUGGING:
+* If you only cloned the subdataset with `datalad clone`, make sure you clone the necessary metadata too: `datalad get -n <subdataset foldername>`. This command with `-n` is not to get the content, but only to clone subdataset
+* If something does not work, try to cd into that subdataset first!
+
  a superdataset does not record individual changes within the subdataset, it only records the state of the subdataset.  In other words, it points to the subdataset location and a point in its life (indicated by a specific commit).
 
  # How to view previous versions of files and dataset?
@@ -180,3 +199,8 @@ Notes:
     * `git checkout master`   # return
 * Option 2: 
     * `git cat-file --textconv SHASUM:<path/to/file>`  # please check out the notes on the DataLad handbook for this option!
+
+# Metadata
+## Search/Query metadata of a dataset
+metadata = filenames, availability
+e.g., wanted to know actions done by an author; and I guess probably search something in the provenance record e.g., a filename --> get related command done upon this file? But I know a better way: git log <path/to/this/file>
