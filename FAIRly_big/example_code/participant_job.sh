@@ -12,7 +12,7 @@ set -e -u -x
 
 # Set up the remotes and get the subject id from the call
 dssource="$1"
-pushgitremote="$2"
+pushgitremote="$2"    # i.e., `output_ria`
 subid="$3"
 sesid="$4"
 
@@ -82,6 +82,7 @@ datalad run \
 datalad push --to output-storage  # `output-storage`: defined when bootstrap.sh: `datalad create-sibling-ria`
 # and the output branch
 # --> FAIRly big paper: push branch with provenance records needs a global lock to prevent write conflicts
+    # using tool `flock` with a global lock, to ensure only one push is performed at a time across all compute jobs
 flock $DSLOCKFILE git push outputstore
 
 echo TMPDIR TO DELETE

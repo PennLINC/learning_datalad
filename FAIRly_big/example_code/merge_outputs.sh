@@ -51,21 +51,24 @@ do
     startnum=$(expr $(expr ${chunknum} - 1) \* ${CHUNKSIZE} + 1)
     endnum=$(expr ${chunknum} \* ${CHUNKSIZE})
     batch_file=code/merge_branches_$(printf %04d ${chunknum}).txt
-    [[ ${num_branches} -lt ${endnum} ]] && endnum=${num_branches}
+    [[ ${num_branches} -lt ${endnum} ]] && endnum=${num_branches}    # if `num_branches` < `endnum`, then assign `num_branches` value to `endnum`
     branches=$(sed -n "${startnum},${endnum}p;$(expr ${endnum} + 1)q" code/has_results.txt)
+    # ^^: `sed` is to parse text file. This should select the branch names from `startnum` to `endnum` from `has_results.txt` file
     echo ${branches} > ${batch_file}
-    git merge -m "fmriprep results batch ${chunknum}/${num_chunks}" $(cat ${batch_file})
+    git merge -m "fmriprep results batch ${chunknum}/${num_chunks}" $(cat ${batch_file})   # git merge the branches listed above
+    # ^^ for fmriprep.zip: <1 sec per branch, if very few branches in total.
 
 done
 
 # Push the merge back
-git push
+git push    # ????what's this for, if we have `datalad push --data nothing` later?
 
 # Get the file availability info
-git annex fsck --fast -f output-storage    
+git annex fsck --fast -f output-storage   # ???? 
+# ^^: <1sec per branch (fmriprep.zip + freesurfer.zip), if very few branches in total.
 
 # This should not print anything
-MISSING=$(git annex find --not --in output-storage)
+MISSING=$(git annex find --not --in output-storage)   # ????
 
 if [[ ! -z "$MISSING" ]]
 then
@@ -74,9 +77,9 @@ then
 fi
 
 # stop tracking this branch
-git annex dead here
+git annex dead here    # ??????
 
 # --> FAIRly big paper: push consolidated provenance records and file availability metadata to permanent storage
-datalad push --data nothing
+datalad push --data nothing   # push back to `output_ria`, but what does nothing mean???
 echo SUCCESS
 
