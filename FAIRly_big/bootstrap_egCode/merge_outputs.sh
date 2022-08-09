@@ -68,7 +68,7 @@ git annex fsck --fast -f output-storage   # ????
 # ^^: <1sec per branch (fmriprep.zip + freesurfer.zip), if very few branches in total.
 
 # This should not print anything
-MISSING=$(git annex find --not --in output-storage)   # ????
+MISSING=$(git annex find --not --in output-storage)
 
 if [[ ! -z "$MISSING" ]]
 then

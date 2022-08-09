@@ -114,6 +114,14 @@ A different place = another storage, GitHub, [GIN](https://gin.g-node.org), clou
     * `datalad push`:   publish the dataset
 * local --> a different place
 
+Specifically, "data siblings" makes the communication between two copies easier (can update each other; also know each other's status). Commands related to "datalad siblings":
+
+* `datalad siblings` 
+    * + `add`: add another dataset (`-url <url>`) as a sibling of local dataset (e.g., `-d .`), and give this sibling a name `--name <name>`
+* `datalad install`
+    * to create a local sibling of an existing dataset from a (remote) location identified via a URL or path. 
+* `datalad create-sibling`
+    * ??? what's the difference vs the other two functions???
 
 ## Publish dataset: `datalad create-sibling` --> `datalad push`
 e.g., to GIN - ref: [rdm workshop by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/03-remote-collaboration/index.html#publishing-to-gin-datalad-push)
