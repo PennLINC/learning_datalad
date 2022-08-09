@@ -1,6 +1,9 @@
 FAIRly big workflow - PennLINC adaptation
+# Step 4. Bootstrap
 
-# temporary space when a job is running:
+
+# Step 5. Run the participant's job
+## temporary space when a job is running:
 * where is it? 
     * the root is either at `${CBICA_TMPDIR}`, or `/cbica/comp_space/$(basename $HOME)`
     * Then, cd to `<job-name>/ds`
@@ -45,3 +48,9 @@ inputs/data/sub-A00085942/
     └── func
 ```
 And each folder of MRI modality contains BIDS data e.g,. .nii.gz, .json, etc
+
+# Step 6. Audit
+Audit is a bootstrap too.
+It will create a folder in parallel of the original one, named e.g., `fmriprep-audit`.
+The folder structure in this audit folder is similar to the original one, e.g., including `analysis`, `input_ria`, `output_ria`.
+When auditing each participant's job, it will qsub a job to do so.
