@@ -22,6 +22,19 @@
 
 ## Create a DataLad dataset
 
+* Create a DataLad dataset of a non-empty folder:
+    * Option 1: Create a new folder:
+        * go to one folder above of this non-empty folder. 
+        * `datalad create <foldername>` will create a new folder named `<foldername>`
+        * cd to `<foldername>`, copy the data from that non-empty folder (`cp -r`)
+        * `datalad save -m <message>`
+    * Option 2: force to directly create DataLad dataset in this non-empty folder: ref [here](https://pennlinc.github.io/docs/TheWay/CuratingBIDSonDisk#testing-pipelines-on-example-subjects)
+        * cd to this non-empty folder
+        * `datalad create -d . --force -D "<description>"`
+            * "--force": enforces dataset creation in non-empty dir
+            * "-D": description
+
+
 ## Run the command with datalad tracking: `datalad run`
 `datalad run` = get inputs + unlock outputs + change + save
 
@@ -165,6 +178,9 @@ Act like a data consumer.
 | Files appear as symlinks? (`tree <folder/filename>`)   | yes        | still yes | not anymore - appear as regular files |
 | write protection? | - | yes! | nope, just as regular files |
 | antagonist | `datalad remove` | `datalad drop` | `datalad save` (kind of; will lock it) |
+
+Notes:
+* After `datalad unlock`, if you want to `datalad drop`, you don't need to `datalad save` first!
 
 ## Update the dataset / keep siblings in sync: `datalad update`
 
