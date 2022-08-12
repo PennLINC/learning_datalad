@@ -7,10 +7,14 @@
 
 
 # Commands and terms on CUBIC cluster
-* check currently running job:
-    * `qstat -j <jobid>`
-* check finished job:
+* check currently running job using `qstat`
+    * check job status: `qstat | grep <jobid>`
+        * adding `grep` is very helpful if there are too many qsub jobs on this project user
+    * check job's info: `qstat -j <jobid>`
+* check finished job using `qacct`
     * `qacct -j <jobid>`
+        * notice that, it will print out several jobs in recent years, sharing the same job id. Only focus on the last, aka the latest chunk.
+    * `qacct -j <jobid> | grep jobname` will only print the job name, which is easier to figure out what this job was for
 
 ## Space
 * Temporary directory at compute node:  `${CUBIC_TMPDIR}`
