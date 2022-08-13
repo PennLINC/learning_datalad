@@ -1,6 +1,13 @@
 FAIRly big workflow - PennLINC adaptation
-# Step 4. Bootstrap
+# Step 2. Prepare BIDS App container
+Q: where did my .sif go?
+A: it's in dir: `<container_dataset>/.datalad/environment/`, and it's `image` in this hidden dir.
 
+
+
+# Step 4. Bootstrap
+## BIDS App container
+Currently, the container dataset will be installed into `${PROJECTROOT}/pennlinc-containers` folder
 
 # Step 5. Run the participant's job
 ## temporary space when a job is running:
