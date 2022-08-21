@@ -1,7 +1,8 @@
 FAIRly big workflow - PennLINC adaptation
 # Step 2. Prepare BIDS App container
 Q: where did my .sif go?
-A: it's in dir: `<container_dataset>/.datalad/environment/`, and it's `image` in this hidden dir.
+A: it's in dir: `<container_dataset>/.datalad/environment/<name-container>`, and it's `image` in this hidden dir.
+    where `<name-container>` is the name you gave when you `datalad containers-add`,
 
 
 
