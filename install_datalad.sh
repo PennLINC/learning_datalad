@@ -36,6 +36,10 @@ datalad create -c text2git my-dataset
 # Step 3. install datalad_container, if you will use container to process the data:
 pip install datalad_container
 
+# Step 4. install datalad osf, if you need to publish dataset onto OSF, or clone dataset from OSF:
+pip install datalad-osf
+# When asked osf token: see https://osf.io/settings/tokens
+    # If you already created one, you might have save it somewhere else - the token is a list of random characters
 
 # If you're following the `rdm-course` by Adina in 2022, best to make sure other tools are installed as well:
 # link [here](https://psychoinformatics-de.github.io/rdm-course/setup.html)
