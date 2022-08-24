@@ -9,6 +9,27 @@ A: it's in dir: `<container_dataset>/.datalad/environment/<name-container>`, and
 # Step 4. Bootstrap
 ## BIDS App container
 Currently, the container dataset will be installed into `${PROJECTROOT}/pennlinc-containers` folder
+## What does `bootstrap.sh` script do?
+* create a datalad dataset of this analysis
+    * clone the input data to `analysis/inputs/data`
+    * clone the BIDS App datalad container dataset to `analysis/pennlinc-containers`
+    * create siblings input_ria and output_ria
+* in folder `analysis/code`, write out several scripts to be used:
+    * `participant_job.sh`     # current version is CLUSTER-SPECIFIC; to remove those commands!
+    * `bidsApp_zip.sh`
+        * `singularity run` the bids app
+        * zip the output folder of the bids app
+    * `qsub_calls.sh`   # CLUSTER-SPECIFIC 
+    * `merge_outputs.sh`
+        * clone the output_ria to a folder called `merge_ds`
+        * list the branches to merge
+        * merge branches (by chunk)
+        * push the merge back
+    * --> when coding `babs-init`: make sure only `qsub_calls.sh` is cluster specific!
+* set ups (cont'd)
+    * datalad drop `inputs/data`  # current command is `uninstall` which is deprecated...
+    * push to input and output RIA
+    * add an alias to the data in the RIA store
 
 # Step 5. Run the participant's job
 ## temporary space when a job is running:
