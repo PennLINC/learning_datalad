@@ -1,4 +1,9 @@
 FAIRly big workflow - PennLINC adaptation
+
+Example script:
+* with my notes: see `babs_tests/testdata/bootstrap-fmriprep-multises-NKI-exemplar.sh`
+
+
 # Step 2. Prepare BIDS App container
 Q: where did my .sif go?
 A: it's in dir: `<container_dataset>/.datalad/environment/<name-container>`, and it's `image` in this hidden dir.
@@ -19,7 +24,7 @@ Currently, the container dataset will be installed into `${PROJECTROOT}/pennlinc
     * `bidsApp_zip.sh`
         * `singularity run` the bids app
         * zip the output folder of the bids app
-    * `qsub_calls.sh`   # CLUSTER-SPECIFIC 
+    * `qsub_calls.sh`   # CLUSTER-SPECIFIC
     * `merge_outputs.sh`
         * clone the output_ria to a folder called `merge_ds`
         * list the branches to merge
@@ -33,7 +38,7 @@ Currently, the container dataset will be installed into `${PROJECTROOT}/pennlinc
 
 # Step 5. Run the participant's job
 ## temporary space when a job is running:
-* where is it? 
+* where is it?
     * the root is either at `${CBICA_TMPDIR}`, or `/cbica/comp_space/$(basename $HOME)`
     * Then, cd to `<job-name>/ds`
         * example `<job-name>`: job-557304-sub-A00085942-ses-TRT   # this is a multi-session processing pipeline
