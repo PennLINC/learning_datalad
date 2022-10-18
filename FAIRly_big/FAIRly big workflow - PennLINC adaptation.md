@@ -1,7 +1,14 @@
 FAIRly big workflow - PennLINC adaptation
 
 Example script:
-* with my notes: see `babs_tests/testdata/bootstrap-fmriprep-multises-NKI-exemplar.sh`
+* with my notes, see:
+    * scripts in folder [bootstrap_egCode](bootstrap_egCode), e.g., [bootstrap_egCode/participant_job.sh](bootstrap_egCode/participant_job.sh)
+    * `babs_tests/testdata/bootstrap-fmriprep-multises-NKI-exemplar.sh`
+* fMRIPrep, QSIPrep: one input dataset of raw BIDS data
+* XCP-D: one input dataset of fMRIPrep's outputs
+* two input datasets:
+    * e.g., running fMRIPrep but given that FreeSurfer outputs already exist (and now as an input dataset)
+        * example script [bootstrap-fmriprep-ingressed-fs.sh](bootstrap-fmriprep-ingressed-fs.sh)
 
 
 # Step 2. Prepare BIDS App container
