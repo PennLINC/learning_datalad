@@ -9,6 +9,11 @@ Example script:
 * two input datasets:
     * e.g., running fMRIPrep but given that FreeSurfer outputs already exist (and now as an input dataset)
         * example script [bootstrap-fmriprep-ingressed-fs.sh](bootstrap-fmriprep-ingressed-fs.sh)
+* Original bootstrap scripts from DataLad group:
+    * [GitHub repo](https://github.com/psychoinformatics-de/fairly-big-processing-workflow)
+    * used in `FAIRly big workflow` paper
+    * [runfmriprep.sh](https://github.com/psychoinformatics-de/fairly-big-processing-workflow/blob/main/bootstrap_forrest_fmriprep.sh#L100-L129) - equivalent of `fmriprep_zip.sh`
+    * [participant_job.sh](https://github.com/psychoinformatics-de/fairly-big-processing-workflow/blob/main/bootstrap_forrest_fmriprep.sh#L135-L206)
 
 
 # Step 2. Prepare BIDS App container

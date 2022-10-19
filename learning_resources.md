@@ -11,6 +11,11 @@ Use them wisely: know when each of them will be helpful
 * Handbook of DataLad: deep and long, mostly of the stuff in it probably won't be used by us
 * [Doc for developers](docs.datalad.org)
 
+For FAIRly big workflow:
+* [GitHub repo](https://github.com/psychoinformatics-de/fairly-big-processing-workflow) of example FAIRly big workflow bootstrap scripts
+    * from DataLad group, used in `FAIRly big workflow` paper
+    * See [FAIRly_big](FAIRly_big) for more explanations.
+
 Be sure:
 
 * Not only to read, but also to try things out - doing it is the best way to learn
