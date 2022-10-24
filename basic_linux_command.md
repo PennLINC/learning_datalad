@@ -5,6 +5,13 @@
 * `head -n <number of lines> <filename>`   # first several lines
 * `tail -n <number of lines> <filename>`   # last several lines
 
+## Change file/folder permissions
+* Debug: cannot write a file on cubic via vscode.
+* Solution:
+    * check `ls -l`, if the 2nd chunk (which tells the group's permission) is still `r--`, not `rw-` (without write permission)
+    * if so, run: `chmod g+w /path/to/folder/*`; this will change permissions of all files in this folder
+        * note that if not adding `*`, it will only change the permission of the folder...
+
 
 # Commands and terms on CUBIC cluster
 * check currently running job using `qstat`

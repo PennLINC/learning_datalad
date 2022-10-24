@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Notes: if datalad has error, try making a new conda env just for datalad and install datalad there :)
-# Also see: 
-# * How to set up datalad: 
+# Also see:
+# * How to set up datalad:
 #     * See YouTube video: https://www.youtube.com/watch?v=IXSE-KtQVBs&t=61s
 #         * start from the beginning
 
@@ -16,12 +16,18 @@ conda activate ${conda_env}
 # in this new env, install datalad, git, and git-annex:
 # [ON LINUX]: install in one command as below:
 conda install -c conda-forge datalad git git-annex
-# [ON MAC with M1 chip]: 
+# [ON MAC with M1 chip]:
 # 1. install `git-annex` from source using `brew`:
-brew install --build-from-source git-annex 
+brew install --build-from-source git-annex
 # 2. install datalad:
 pip install datalad   # M1 Mac; see here for non-M1 Mac: https://handbook.datalad.org/en/latest/intro/installation.html#mac-osx-non-m1
 # it seems installing git again is not necessary as long as it is on the system.
+
+# If you haven't configure your Git's `user.name` and/or `user.email`,
+#   please do so before using DataLad.
+#   this usually happen after e.g., creating a new CUBIC project.
+# $ git config --global user.name "FIRST_NAME LAST_NAME"
+# $ git config --global user.email "MY_NAME@example.com"
 
 # check the versions:
 datalad --version

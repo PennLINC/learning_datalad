@@ -7,7 +7,7 @@
     * `git status` can also show some status information
     * `datalad -e <"commit" or "no">`: to speed up `datalad status` for deep dataset hierarchies/large datasets: not to comprehensively check subdataset. See more [here](http://handbook.datalad.org/en/latest/basics/101-146-gists.html#speed-up-status-reports-in-large-datasets).
     * `du -sh <folder/filename>` to print the folder or file size. Can also do: `du -sh *` to list all folders/files in the current directory
-* `tig`: view the datalad history. 
+* `tig`: view the datalad history.
     * View the detailed history of a commit by hitting "Enter". Go up level or exit by hitting "q"
     * `git show`: show the last save/commit
     * `git log -n <a number>`: print the last n commits
@@ -24,7 +24,7 @@
 
 * Create a DataLad dataset of a non-empty folder:
     * Option 1: Create a new folder:
-        * go to one folder above of this non-empty folder. 
+        * go to one folder above of this non-empty folder.
         * `datalad create <foldername>` will create a new folder named `<foldername>`
         * cd to `<foldername>`, copy the data from that non-empty folder (`cp -r`)
         * `datalad save -m <message>`
@@ -57,7 +57,7 @@ More notes:
     * If it's the subdataset, e.g., called "inputs": `-d inputs`
 
 ## Drop the content: `datalad drop` --> `datalad get`
-If the data was got by `datalad` function, e.g., `datalad download-url`, then the file content can be dropped, but the information about its presence and history are maintained. 
+If the data was got by `datalad` function, e.g., `datalad download-url`, then the file content can be dropped, but the information about its presence and history are maintained.
 
 However, for file got by manual way (not `datalad` command) + `datalad save` probably cannot apply`datalad drop`, otherwise probably faced with an error .
 
@@ -100,7 +100,7 @@ datalad remove -d <path to the dataset you want to remove>
 ref is the [rdm-course by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/01-content-tracking-with-datalad/index.html#breaking-things-and-repairing-them)
 
 ### If you only modified files but haven't `datalad save`:
-!!! `git restore` is dangerous! All the unsaved modifications will be gone!!! 
+!!! `git restore` is dangerous! All the unsaved modifications will be gone!!!
 
 `git restore <filename_of_the_file_you_changed>`
 
@@ -129,10 +129,10 @@ A different place = another storage, GitHub, [GIN](https://gin.g-node.org), clou
 
 Specifically, "data siblings" makes the communication between two copies easier (can update each other; also know each other's status). Commands related to "datalad siblings":
 
-* `datalad siblings` 
+* `datalad siblings`
     * + `add`: add another dataset (`-url <url>`) as a sibling of local dataset (e.g., `-d .`), and give this sibling a name `--name <name>`
 * `datalad install`
-    * to create a local sibling of an existing dataset from a (remote) location identified via a URL or path. 
+    * to create a local sibling of an existing dataset from a (remote) location identified via a URL or path.
 * `datalad create-sibling`
     * ??? what's the difference vs the other two functions???
 
@@ -140,34 +140,36 @@ Specifically, "data siblings" makes the communication between two copies easier 
 e.g., to GIN - ref: [rdm workshop by Adina 2022](https://psychoinformatics-de.github.io/rdm-course/03-remote-collaboration/index.html#publishing-to-gin-datalad-push)
 
 1. create an empty repo & set up `datalad siblings`
-1. `datalad push` 
+1. `datalad push`
 
 ## Clone data with `datalad clone` --> `datalad get` --> (optional) `datalad unlock`
 Act like a data consumer.
 
 1. `datalad clone <url/local dir> <local_foldername>`
-    * `url/local dir` = 
-        * If it's RIA store: using:
-            * `ria+http://<url>#~<alias name>` 
-            * `ria+file://<folderpath>#~<alias name>`, for example `ria+file:///cbica/projects/xxx/xxx/qsiprep/output_ria#~data`
-            * here the `<alias name>` = the foldername in `<folderpath>/alias`
-        * If it's just a datalad dataset on the same machine, e.g., on cubic:
-            * simply use the `<path/to/folder>`, without anything more!
-            * e.g., `/cbica/projects/xxx/raw_bids/`
-        * If it's just a datalad dataset on the internet, just provide the url:
-            * e.g., `https://github.com/datalad-datasets/longnow-podcasts.git`
-            * e.g., `http://example.com/dataset`
-    * `local_foldername` is for the foldername that will be created and where the cloned data will be. This is different from `git clone` where this isn't specified, and the same dataset name will be used as the foldername.
-    * notice that by now the annexed content hasn't been downloaded.
-        * `datalad status --annex all` to check how much data size downloaded - make sure `cd <into_root_path_ds>` first
-    * check where the file content is:
-        * `git annex whereis <filename>`
-    * additional argument: if you want to clone a dataset as subdataset: add `-d .` meaning clone this new dataset as subdataset of the current datatset
+* `url/local dir` =
+    * If it's RIA store: using: (see more explanation [here](https://handbook.datalad.org/en/latest/beyond_basics/101-147-riastores.html#cloning-and-updating-from-ria-stores))
+        * `ria+http://<url>#~<alias name>`
+        * `ria+file://<folderpath>#~<alias name>`, for example `ria+file:///cbica/projects/xxx/xxx/qsiprep/output_ria#~data` is used for RIA store on a local file system (e.g., both on CUBIC, make sure current project has read access to the project that has this RIA store)
+        * `ria+ssh://[user@]hostname:/cbica/projects/xxx/xxx/qsiprep/output_ria#~data` is used for RIA store on an SSH-accessible server (e.g., CUBIC, make sure personal user has read access to this CUBIC project)
+        * here the `<alias name>` = the foldername in `<folderpath>/alias`
+    * If it's just a datalad dataset on the same machine, e.g., on cubic:
+        * simply use the `<path/to/folder>`, without anything more!
+        * e.g., `/cbica/projects/xxx/raw_bids/`
+    * If it's just a datalad dataset on the internet, just provide the url:
+        * e.g., `https://github.com/datalad-datasets/longnow-podcasts.git`
+        * e.g., `http://example.com/dataset`
+* `local_foldername` is for the foldername that will be created and where the cloned data will be. This is different from `git clone` where this isn't specified, and the same dataset name will be used as the foldername.
+* notice that by now the annexed content hasn't been downloaded.
+    * `datalad status --annex all` to check how much data size downloaded - make sure `cd <into_root_path_ds>` first
+* check where the file content is:
+    * `git annex whereis <filename>`
+* additional argument: if you want to clone a dataset as subdataset: add `-d .` meaning clone this new dataset as subdataset of the current datatset
+
 2. `cd <into_root_path_ds>`, then `datalad get <filename>`
-    * by now, you got the file content
-    * however, currently the file content are at `.git/annex`, and the "files" are still symlinks to `.git/annex`
-        * if files are photos, you can view them as usual (symlinked to the actual content)
-        * but because of git-annex, the files are write-protected
+* by now, you got the file content
+* however, currently the file content are at `.git/annex`, and the "files" are still symlinks to `.git/annex`
+    * if files are photos, you can view them as usual (symlinked to the actual content)
+    * but because of git-annex, the files are write-protected
 3. (optional) `datalad unlock <filename>` so that files look like "regular files" without symlinks
     * but you removed the write-protection!
     * After unlocking, it's important to do `datalad save` to lock again!!
@@ -181,6 +183,24 @@ Act like a data consumer.
 
 Notes:
 * After `datalad unlock`, if you want to `datalad drop`, you don't need to `datalad save` first!
+* currently `ria+ssh`:
+    * will throw out weird information `[INFO   ] RIA store unavailable.` but it seems it does not affect cloning?
+    * might need to configure `ssh` first? (if not using username?) See below. - Matt said he created an issue on datalad github.
+```
+chmod 700 ~/.ssh
+cd ~/.ssh
+vim config
+```
+```
+# add these to this config:
+Host <name>
+    HostName <name>.xx.xx.com
+    User <personal_username>
+```
+```
+# finally:
+chmod 600 ~/.ssh/config
+```
 
 ## Update the dataset / keep siblings in sync: `datalad update`
 
@@ -216,12 +236,12 @@ PLEASE BE AWARE that if you are dealing with a subdataset within a superdataset,
 
  # How to view previous versions of files and dataset?
  ref: [Datalad Handbook](http://handbook.datalad.org/en/latest/basics/101-137-history.html#viewing-previous-versions-of-files-and-datasets)
- * Option 1: 
+ * Option 1:
     * git log -n <number of history> --oneline   # find the <shasum> you want to go to
     * `git checkout <shasum>`
     * view something via e.g., `tail <filename>`
     * `git checkout master`   # return
-* Option 2: 
+* Option 2:
     * `git cat-file --textconv SHASUM:<path/to/file>`  # please check out the notes on the DataLad handbook for this option!
 
 # Metadata
