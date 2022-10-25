@@ -158,6 +158,8 @@ Act like a data consumer.
     * If it's just a datalad dataset on the internet, just provide the url:
         * e.g., `https://github.com/datalad-datasets/longnow-podcasts.git`
         * e.g., `http://example.com/dataset`
+    * If it's datalad ds on OSF:
+        * `osf://<id>`
 * `local_foldername` is for the foldername that will be created and where the cloned data will be. This is different from `git clone` where this isn't specified, and the same dataset name will be used as the foldername.
 * notice that by now the annexed content hasn't been downloaded.
     * `datalad status --annex all` to check how much data size downloaded - make sure `cd <into_root_path_ds>` first
