@@ -11,7 +11,7 @@ echo I\'m in $PWD using `which python`
 set -e -u -x
 
 # Set up the remotes and get the subject id from the call
-dssource="$1"
+dssource="$1"   # i.e., `input_ria`
 pushgitremote="$2"    # i.e., `output_ria`
 subid="$3"
 sesid="$4"
@@ -19,7 +19,7 @@ sesid="$4"
 # change into the cluster-assigned temp directory. Not done by default in SGE
 cd ${CBICA_TMPDIR}
 # OR Run it on a shared network drive | MAKE SURE TO CHANGE IT BACK BEFORE RUNNING ON
-# MANY PARTICIPANTS!!! 
+# MANY PARTICIPANTS!!!
 # cd /cbica/comp_space/$(basename $HOME)
 
 # Used for the branch names and the temp dir
@@ -88,10 +88,10 @@ flock $DSLOCKFILE git push outputstore
 echo TMPDIR TO DELETE
 echo ${BRANCH}
 
-datalad uninstall -r --nocheck --if-dirty ignore inputs/data
+datalad uninstall -r --nocheck --if-dirty ignore inputs/data  # `datalad uninstall` is deprecated; use `datalad drop` instead
 datalad drop -r . --nocheck
-git annex dead here
-cd ../..
+git annex dead here    # as the data has been dropped, we don't want to be reminded of this
+cd ../..    # cd out of $BRANCH
 rm -rf $BRANCH
 
 echo SUCCESS

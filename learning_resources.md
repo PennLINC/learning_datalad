@@ -1,6 +1,7 @@
 # Here are some resources for learning DataLad
 
-Use them wisely: know when each of them will be helpful
+* Use them wisely: for each resource, know under what scenario it will be helpful.
+* This also includes some reference (but not necessary for learning purpose).
 
 * YouTube workshop videos by Adina, RDM-course, 2022
     * This is the [website for this workshop](https://psychoinformatics-de.github.io/rdm-course/)
@@ -15,6 +16,9 @@ For FAIRly big workflow:
 * [GitHub repo](https://github.com/psychoinformatics-de/fairly-big-processing-workflow) of example FAIRly big workflow bootstrap scripts
     * from DataLad group, used in `FAIRly big workflow` paper
     * See [FAIRly_big](FAIRly_big) for more explanations.
+
+Datalad API:
+* [doc of latest version](https://docs.datalad.org/en/latest/modref.html)
 
 Be sure:
 

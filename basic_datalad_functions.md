@@ -209,8 +209,10 @@ chmod 600 ~/.ssh/config
 Assume: original copy --> gin --> another copy
 
 * In the original dataset, make some actions with `datalad run`;
+* before next step, make sure you're in a conda env with `datalad-osf` installed!
 * push to remote: `datalad push --to <somewhere>`
-    * `<somewhere>` = gin, origin, etc
+    * `<somewhere>` = osf, gin, origin, etc
+        * for `osf`, there would be another sibling of the dataset (`datalad siblings`) called e.g., `osf-storage`, and here we don't use that, but just use `osf`
 * cd to "another copy": `datalad update -s origin --how merge`
 
 Compared to Git: # ref: [DataLad Handbook](http://handbook.datalad.org/en/latest/basics/101-119-sharelocal4.html)
