@@ -32,18 +32,22 @@ pip install datalad   # M1 Mac; see here for non-M1 Mac: https://handbook.datala
 # check the versions:
 datalad --version
 git --version
-
-# check git-annex is well installed:
-git-annex
+git-annex version
 
 # try out datalad to confirm it's error free:
 datalad create -c text2git my-dataset
 
 # Step 3. install datalad_container, if you will use container to process the data:
 pip install datalad_container
+# check installed version: `datalad containers-add --version`
 
 # Step 4. install datalad osf, if you need to publish dataset onto OSF, or clone dataset from OSF:
 pip install datalad-osf
+datalad osf-credentials  # and provide your OSF token when asked (see below for more)
+# ^^ this step is very important; without this it might cause error that's hard to debug...
+# check installed version:
+#   $ datalad osf-credentials --version
+
 # When asked osf token: see https://osf.io/settings/tokens
     # If you already created one, you might have save it somewhere else - the token is a list of random characters
 

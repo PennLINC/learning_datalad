@@ -160,6 +160,8 @@ Act like a data consumer.
         * e.g., `http://example.com/dataset`
     * If it's datalad ds on OSF:
         * `osf://<id>`
+            * before using this, make sure: 1. you are in a conda env that has datalad-osf installed
+            * and, 2. make sure you also set up `datalad osf-credentials` (please provide your osf token when asked)
 * `local_foldername` is for the foldername that will be created and where the cloned data will be. This is different from `git clone` where this isn't specified, and the same dataset name will be used as the foldername.
 * notice that by now the annexed content hasn't been downloaded.
     * `datalad status --annex all` to check how much data size downloaded - make sure `cd <into_root_path_ds>` first
