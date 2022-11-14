@@ -19,6 +19,8 @@
 * list siblings of a datalad dataset - assuming you're in a datalad-ds:
     * `datalad siblings`; Or:
     * `git remote -v`
+* check if there is something wrong with `gix-annex` in some files:
+    * `git-annex fsck`
 
 ## Create a DataLad dataset
 

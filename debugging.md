@@ -1,4 +1,8 @@
 
+## Basic tips
+* If you messed up with `datalad` or `git-annex`, try start from the beginning, e.g., create a new project
+* file content availability: better to be consistent in one location, e.g., `datalad drop *` to make sure all are not here.
+
 ## Data processing
 ### input data has some problem
 e.g., cannot identify file xxxxx
@@ -23,7 +27,17 @@ If you are using vscode, check if there is a pop out window at the upper band of
 ### Cannot `datalad get` a file from OSF
 but other files are (or might be) fine.
 
-Possible Solution: check if `datalad osf-credentials` has been set up (if not, please provide your OSF token when asked)
+Possible Solutions:
+* check if `datalad osf-credentials` has been set up (if not, please provide your OSF token when asked)
+* check if all the files are tracked by `git-annex` (unless you set up the datalad repo by: `-c text2git`): `git-annex fsck`
+* do everything from beginning:
+    * `cp -rl` to copy out the data to a new folder
+    * `datalad create`   # try out `-c text2git` if the problematic file is json file
+    * `datalad save`
+    * `git-annex fsck`: double check
+    * `datalad status`
+    * push to osf
+
 
 ## When running on a cluster
 Sometimes the cluster might be very slow so some actions were not successfully completed.
