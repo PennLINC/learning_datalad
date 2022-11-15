@@ -15,7 +15,7 @@ conda activate ${conda_env}
 # Step 2. Install datalad:
 # in this new env, install datalad, git, and git-annex:
 # [ON LINUX]: install in one command as below:
-conda install -c conda-forge datalad git git-annex
+conda install -c conda-forge datalad git git-annex   # replace `install` with `update` to upgrade versions
 # [ON MAC with M1 chip]:
 # 1. install `git-annex` from source using `brew`:
 brew install --build-from-source git-annex
