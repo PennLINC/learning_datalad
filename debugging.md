@@ -1,9 +1,7 @@
 
 ## Basic tips
 * If you messed up with `datalad` or `git-annex`, try start from the beginning, e.g., create a new project
-* file content availability: better to be consistent in one location,
-    * check `git annex whereis <filename>` (or without `<filename>`)
-    * e.g., `datalad drop *` to make sure all are not here.
+
 
 ## Steps you might go over when debugging errors without apparent idea/solution
 When facing an error, please check out if there is solution to this specific question (see sections below). If not, follow these steps:
@@ -16,6 +14,14 @@ When facing an error, please check out if there is solution to this specific que
     * If only one specific file gets this problem, might check that specific one
         * e.g., re-generate it?
         * `git-annex whereis <filename>`, `git-annex fsck <filename>`, and compare printed messages with other "good" files'
+1. Is the source ds's problem?
+    1. Is there any untracked changes in the source ds?
+    1. Can you access this problematic file in the source ds?
+        * If it's an image, try `mrpeek`
+1. file content availability: better to be consistent in one location
+    * check `git annex whereis <filename>` (or without `<filename>`)
+        * Does the `git annex whereis` output the same for the file you *can* get as it is for the one you *can't*?
+    * e.g., `datalad drop *` to make sure all are not here.
 1. Can you replicate the same error with another datalad ds of some random files?
     * command to generate file of random data: `head -c 1024 </dev/urandom >myfile`
         * you can replace `1024` with the file size you want (unit: byte)
@@ -52,9 +58,6 @@ e.g., PermissionError: [Errno 13] Permission denied: <output_filename>
 e.g., Update availability for 'gin':  75%|█████████████████▎     | 3.00/4.00
 
 If you are using vscode, check if there is a pop out window at the upper band of vscode! It's waiting for you to enter the username and password for GIN [facepalm]
-
-### General debugging with dataset that has siblings (e.g., OSF, or just cloned ds):
-* Is there any untracked changes in the source ds?
 
 ### Cannot `datalad get` a file from OSF
 but other files are (or might be) fine.

@@ -223,6 +223,28 @@ Compared to Git: # ref: [DataLad Handbook](http://handbook.datalad.org/en/latest
 * `datalad update` ~ `git fetch`
 * `datalad update --merge` ~ `git pull`
 
+## Remove a sibling (inclu. OSF)
+```
+# find the name of the sibling you want to remove:
+git remote -v    # or:
+datalad siblings
+
+# remove:
+datalad siblings remove -s <name>  # <name> of the sibling
+
+# confirm it's removed:
+datalad siblings    # should only be 'here'
+git remote -v    # shouldn't be anything
+
+```
+
+For OSF, you might need to remove twice:
+```
+datalad siblings remove -s osf   # or your specific osf sibling name
+datalad siblings remove -s osf-storage   # or your specific one
+```
+Now you can delete OSF project on the webpage.
+
 # Reproduce
 ## Rerun
 `datalad rerun <shasum>`
