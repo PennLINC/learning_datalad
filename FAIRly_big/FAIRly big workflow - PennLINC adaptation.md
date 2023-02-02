@@ -95,7 +95,20 @@ inputs/data/sub-A00085942/
 ```
 And each folder of MRI modality contains BIDS data e.g,. .nii.gz, .json, etc
 
-# Step 6. Audit
+# Step 6. Merge
+- will clone to `merge_ds`, so if merging was failed, can remove `merge_ds` and do another round
+- for other steps, please see `What does `bootstrap.sh` script do?`
+- if there are changes in scripts (.sh) in `analysis/code`:
+    - `datalad save -m "xxx"`
+    - `datalad push --to input`
+    - whether to push to output:
+        - only push to output if there is nothing currently in the `output_ria`
+        - otherwise just save and push to input! Not to push to output!
+        - ^^ applies to any script in `analysis/code`. - SC 12/22/22
+        - even without pushing to output, after (running another job - not sure if needed) + merging, and cloning out `output_ria`, the scripts in `code` in cloned ds is up-to-date ones!
+
+
+# (optional) Step 7. Audit
 Audit is a bootstrap too.
 It will create a folder in parallel of the original one, named e.g., `fmriprep-audit`.
 The folder structure in this audit folder is similar to the original one, e.g., including `analysis`, `input_ria`, `output_ria`.
