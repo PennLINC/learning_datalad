@@ -1,4 +1,4 @@
-#!/bin/bash
+Install Datalad and other related packages.
 
 * Notes: if datalad has error, try making a new conda env just for datalad and install datalad there :)
 * Also see:
