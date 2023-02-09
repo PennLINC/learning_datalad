@@ -58,15 +58,15 @@ git config --global user.name "FIRST_NAME LAST_NAME"
 git config --global user.email "MY_NAME@example.com"
 ```
 
-### Step 2.3 Checks
-#### Step 2.3.1 check the versions:
+## Step 2.3 Checks
+### Step 2.3.1 check the versions:
 ```
 datalad --version
 git --version
 git-annex version
 ```
 
-#### Step 2.3.2 try out datalad to confirm it's error free:
+### Step 2.3.2 try out datalad to confirm it's error free:
 ```
 datalad create -c text2git my-dataset
 ```
@@ -98,5 +98,5 @@ If you already created one, you might have save it somewhere else - the token is
 
 To check installed version: `datalad osf-credentials --version`
 
-# (Optional) Other packages
+# (Optional) Install other tools
 If you're following the `rdm-course` by Adina in 2022, best to make sure other tools are installed as well: link [here](https://psychoinformatics-de.github.io/rdm-course/setup.html).
