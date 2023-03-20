@@ -189,6 +189,9 @@ Act like a data consumer.
 
 Notes:
 * After `datalad unlock`, if you want to `datalad drop`, you don't need to `datalad save` first!
+* After `datalad unlock`, even without any changes on the file content itself, this file will appear as "modified" when `datalad status`. That's fine! After you `datalad save` this file, you'll see there is no new commit:
+    * way 1: should be "save (notneeded: 1)" when `datalad save`;
+    * way 2: use `git log --oneline` to check the commit list
 * currently `ria+ssh`:
     * will throw out weird information `[INFO   ] RIA store unavailable.` but it seems it does not affect cloning?
     * might need to configure `ssh` first? (if not using username?) See below. - Matt said he created an issue on datalad github.
