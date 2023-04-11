@@ -113,3 +113,8 @@ Audit is a bootstrap too.
 It will create a folder in parallel of the original one, named e.g., `fmriprep-audit`.
 The folder structure in this audit folder is similar to the original one, e.g., including `analysis`, `input_ria`, `output_ria`.
 When auditing each participant's job, it will qsub a job to do so.
+
+# Step 8. Unzip
+Bash scripts for custom unzip:
+- [fMRIPrep multi-ses](bootstrap-custom-unzip-fmriprep-multises.sh)
+- [fMRIPrep single-ses](bootstrap-custom-unzip-fmriprep.sh)
