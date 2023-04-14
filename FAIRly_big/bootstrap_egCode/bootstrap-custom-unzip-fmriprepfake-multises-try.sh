@@ -1,6 +1,10 @@
 # Modified from: TheWay (github repo)/scripts/cubic/bootstrap-custom-unzip-fmriprep-multises.sh
 #       SHASUM: ee552a9 (version date: 10/20/2022)
 # Modified for preparing examples for implementing `babs-unzip` in BABS.
+# How to run? 
+#   1. cd to where current bash script is;
+#   2. run: `bash bootstrap-custom-unzip-fmriprepfake-multises-try.sh /cbica/projects/BABS/data/test_babs_multi-ses_fmriprepfake /cbica/projects/BABS/data`
+#   3. before running merging, IF NEEDED (check in output RIA first!!!), you need to change 'master' to 'main' in `code/merge_outputs.sh`...
 
 ## NOTE ##
 # This workflow is derived from the Datalad Handbook
@@ -124,7 +128,7 @@ datalad run \
     -i code/get_files.sh \
     -i inputs/data/${subid}_${sesid}_fmriprepfake*.zip \
     --explicit \
-    -o ${subid}_${sesid}*desc-confounds_timeseries.tsv \
+    -o ${subid}_${sesid}*space-T1w_desc-brain_mask.nii.gz \
     -o ${html} \
     -m "unzipped ${subid}_${sesid}" \
     "bash code/get_files.sh inputs/data/${subid}_${sesid}_fmriprepfake*.zip"
@@ -156,7 +160,7 @@ sesid=$(basename $ZIP_FILE | cut -d '_' -f 2)
 
 # unzip outputs
 unzip -n $ZIP_FILE 'fmriprepfake/*' -d .
-desired_files=fmriprepfake/${subid}/${sesid}/func/*desc-confounds_timeseries.tsv
+desired_files=fmriprepfake/${subid}/${sesid}/func/*space-T1w_desc-brain_mask.nii.gz
 for desired_file in $desired_files; do
 # check if the desired file exists
 if [ -f ${desired_file} ];
