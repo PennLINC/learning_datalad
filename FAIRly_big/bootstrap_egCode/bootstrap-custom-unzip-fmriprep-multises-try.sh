@@ -83,8 +83,8 @@ fi
 cat > code/participant_job.sh << "EOT"
 #!/bin/bash
 #$ -S /bin/bash
-#$ -l h_vmem=25G
-#$ -l tmpfree=200G
+#$ -l h_vmem=20G
+#$ -l tmpfree=50G
 #$ -R y 
 #$ -l h_rt=24:00:00
 # Set up the correct conda environment
