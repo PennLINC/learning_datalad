@@ -25,7 +25,7 @@ set -e -u
 
 
 ## Set up the directory that will contain the necessary directories
-PROJECTROOT=${WHERE_UNZIP_PROJECT}/FMRIPREP-UNZIPPED
+PROJECTROOT=${WHERE_UNZIP_PROJECT}/FMRIPREPFAKE-UNZIPPED
 if [[ -d ${PROJECTROOT} ]]
 then
     echo ${PROJECTROOT} already exists
@@ -75,7 +75,7 @@ datalad install -d . -r --source ${DERIVATIVE_INPUT} inputs/data
 # amend the previous commit with a nicer commit message
 git commit --amend -m 'Register input data dataset as a subdataset'
 
-ZIPS=$(find inputs/data -name 'sub-*fmriprep*' | cut -d '/' -f 3 | sort)
+ZIPS=$(find inputs/data -name 'sub-*fmriprepfake*' | cut -d '/' -f 3 | sort)
 if [ -z "${ZIPS}" ]
 then
     echo "No subjects found in input data"
@@ -122,12 +122,12 @@ git checkout -b "${BRANCH}"
 html=${subid}_${sesid}.html
 datalad run \
     -i code/get_files.sh \
-    -i inputs/data/${subid}_${sesid}_fmriprep*.zip \
+    -i inputs/data/${subid}_${sesid}_fmriprepfake*.zip \
     --explicit \
     -o ${subid}_${sesid}*desc-confounds_timeseries.tsv \
     -o ${html} \
     -m "unzipped ${subid}_${sesid}" \
-    "bash code/get_files.sh inputs/data/${subid}_${sesid}_fmriprep*.zip"
+    "bash code/get_files.sh inputs/data/${subid}_${sesid}_fmriprepfake*.zip"
 # file content first -- does not need a lock, no interaction with Git
 datalad push --to output-storage
 # and the output branch
@@ -155,18 +155,18 @@ subid=$(basename $ZIP_FILE | cut -d '_' -f 1)
 sesid=$(basename $ZIP_FILE | cut -d '_' -f 2)
 
 # unzip outputs
-unzip -n $ZIP_FILE 'fmriprep/*' -d .
-desired_files=fmriprep/${subid}/${sesid}/func/*desc-confounds_timeseries.tsv
+unzip -n $ZIP_FILE 'fmriprepfake/*' -d .
+desired_files=fmriprepfake/${subid}/${sesid}/func/*desc-confounds_timeseries.tsv
 for desired_file in $desired_files; do
 # check if the desired file exists
 if [ -f ${desired_file} ];
 then
-    # copy only the file we need out of fmriprep
+    # copy only the file we need out of fmriprepfake
     cp ${desired_file} .
 fi
 done
 # remove unzip dir
-rm -rf fmriprep
+rm -rf fmriprepfake
 
 EOT
 
