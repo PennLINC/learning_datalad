@@ -8,6 +8,9 @@
 ## Ensure the environment is ready to bootstrap the analysis workspace
 # Check that we have conda installed
 
+DERIVATIVE_BOOTSTRAP_DIR=$1
+WHERE_UNZIP_PROJECT=$2
+
 DATALAD_VERSION=$(datalad --version)
 
 if [ $? -gt 0 ]; then
@@ -22,7 +25,7 @@ set -e -u
 
 
 ## Set up the directory that will contain the necessary directories
-PROJECTROOT=${PWD}/FMRIPREP-UNZIPPED
+PROJECTROOT=${WHERE_UNZIP_PROJECT}/FMRIPREP-UNZIPPED
 if [[ -d ${PROJECTROOT} ]]
 then
     echo ${PROJECTROOT} already exists
@@ -38,7 +41,7 @@ fi
 mkdir -p $PROJECTROOT
 
 ## DERIVATIVE_BOOTSTRAP_DIR will be the path to the bootstrap directory containing your derivatives
-DERIVATIVE_BOOTSTRAP_DIR=$1
+
 DERIVATIVE_INPUT=ria+file://${DERIVATIVE_BOOTSTRAP_DIR}"/output_ria#~data"
 if [[ -z ${DERIVATIVE_BOOTSTRAP_DIR} ]]
 then
@@ -63,9 +66,9 @@ cd analysis
 
 # create dedicated input and output locations. Results will be pushed into the
 # output sibling and the analysis will start with a clone from the input sibling.
-datalad create-sibling-ria -s output "${output_store}"
+datalad create-sibling-ria -s output "${output_store}" --new-store-ok
 pushremote=$(git remote get-url --push output)
-datalad create-sibling-ria -s input --storage-sibling off "${input_store}"
+datalad create-sibling-ria -s input --storage-sibling off "${input_store}" --new-store-ok
 
 datalad install -d . -r --source ${DERIVATIVE_INPUT} inputs/data
 
@@ -88,7 +91,7 @@ cat > code/participant_job.sh << "EOT"
 #$ -R y 
 #$ -l h_rt=24:00:00
 # Set up the correct conda environment
-source ${CONDA_PREFIX}/bin/activate base
+source ${CONDA_PREFIX}/bin/activate mydatalad
 echo I\'m in $PWD using `which python`
 # fail whenever something is fishy, use -x to get verbose logfiles
 set -e -u -x
