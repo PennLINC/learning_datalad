@@ -57,6 +57,8 @@ More notes:
 * If there is subdataset in current dataset, make sure explicitly specify the dataset this history will go to, by adding `-d <which_dataset>`
     * If it's current dataset: `-d .`
     * If it's the subdataset, e.g., called "inputs": `-d inputs`
+* Debugging: if `-i` or `-o` values have globs (filenames including `*`), make sure the values are quoted (`''`)!!! e.g., `-i 'inputs/data/BIDS/*json'`
+    * Otherwise, the full command of `datalad run` may miss `-i` or `-o` for expanded globs!
 
 ## Drop the content: `datalad drop` --> `datalad get`
 If the data was got by `datalad` function, e.g., `datalad download-url`, then the file content can be dropped, but the information about its presence and history are maintained.

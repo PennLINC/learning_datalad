@@ -53,6 +53,33 @@ After replacing with the valid file, make sure you `datalad save`.
 ### output file: Permission denined
 e.g., PermissionError: [Errno 13] Permission denied: <output_filename>
 
+### `datalad run` has errors
+Error message from `datalad run`:
+
+```
+run(impossible): /scratch/babs/SGE_xxx/job-xxx-sub-01/ds (dataset) [clean dataset required to detect changes from command; use `datalad status` to inspect unsaved changes]
+```
+
+ref: [BABS issue #71](https://github.com/PennLINC/babs/issues/71)
+
+#### Step 1. Did you specify `--explicit` in `datalad run`?
+If not clean dataset is expected (e.g., for FAIRly big workflow, before `datalad run`, other subject's folders will be deleted, making the input dataset not cleaned), then please check if you have specify `--explicit` in `datalad run`.
+
+#### Step 2. Check if you did not quote globs?
+If `-i` or `-o` values have globs (filenames including `*`), make sure the values are quoted (`''`)!!! e.g., `-i 'inputs/data/BIDS/*json'`
+
+Otherwise, the full command of `datalad run` may miss `-i` or `-o` for expanded globs! Example expanded globs as below:
+
+```
+# what I specified: 
+datalad run ... -i inputs/data/BIDS/*json ...   # forgot to quote the globs!
+
+# after expansion by `datalad`:
++ datalad run -i code/fmriprepfake-0-1-1_zip.sh -i inputs/data/BIDS/sub-01 -i inputs/data/BIDS/dataset_description.json inputs/data/BIDS/T1w.json inputs/data/BIDS/task-flanker_bold.json -i containers/.datalad/environments/fmriprepfake-0-1-1/image --expand inputs --explicit -o sub-01_fmriprepfake-0-1-1.zip -m 'fmriprepfake-0-1-1 sub-01' 'bash ./code/fmriprepfake-0-1-1_zip.sh sub-01'
+```
+
+See? Some of `*.json` arguments did NOT have `-i`!!!
+
 ## Collaboration
 ### When `datalad push --to gin`, it's stuck (percent < 100%)
 e.g., Update availability for 'gin':  75%|█████████████████▎     | 3.00/4.00
