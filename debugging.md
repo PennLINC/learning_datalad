@@ -122,3 +122,50 @@ So,
 Sometimes the cluster might be very slow so some actions were not successfully completed.
 
 If using vscode, might add `PYDEVD_WARN_EVALUATION_TIMEOUT` to `.vscode/launch.json`. See [here](https://stackoverflow.com/questions/65093883/how-do-i-turn-off-the-evaluating-plt-show-did-not-finish-after-3-00s-seconds) for more.
+
+## These (warning) messages can be ignored:
+### When using `git-annex`:
+e.g., `git-annex version`:
+
+```
+/bin/sh: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+```
+This warning message can be repeated a few times.
+
+### After installing `git-annex`:
+```
+##############################################################################
+#                                                                            #
+# Standalone distribution of git-annex was installed, instead of the         #
+# standard distribution, likely due to package conflicts in the target       #
+# environment.  The standalone distribution may have issues (e.g. be slower, #
+# or not pass the expected environment to some external programs);           #
+# the standard distribution should be used when possible.                    #
+# You can force installation of the standard version by adding =alldep* to   #
+# the build string of the package specification, e.g.                        #
+#                                                                            #
+# conda install -c conda-forge git-annex=*=alldep*                           #
+#                                                                            #
+# However, this might cause an older git-annex version to be installed,      #
+# if later versions' dependencies conflict with other packages               #
+# in the target environment.                                                 #
+#                                                                            #
+# For more info on the standalone git-annex distribution see                 #
+# https://git-annex.branchable.com/install/Linux_standalone/                 #
+#                                                                            #
+##############################################################################
+```
+
+### When `git merge` (e.g., from `babs-merge`):
+These are normal datalad printouts: - Sydney, 4/20/23, BABS slack channel.
+```
+Merging chunk #1 (total of 1 chunk[s] to merge)...   # this line is from `babs-merge`
+Fast-forwarding to: remotes/origin/job-30305275-sub-01
+Trying simple merge with remotes/origin/job-30305341-sub-02
+Merge made by the 'octopus' strategy.
+ sub-01_fmriprepfake-20-2-3.zip | 1 +
+ sub-02_fmriprepfake-20-2-3.zip | 1 +
+ 2 files changed, 2 insertions(+)
+ create mode 120000 sub-01_fmriprepfake-20-2-3.zip
+ create mode 120000 sub-02_fmriprepfake-20-2-3.zip
+```
