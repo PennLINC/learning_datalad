@@ -32,3 +32,5 @@
     * This is good to check the temporary output data when the job is running
     * after the job is successfully finished, the folder will be deleted.
     * However, should not submit a lot of jobs running here! Will blow up the space...
+* How much space has been used/how much left for a project user account?
+    * `df -h .`    # `-h` will show human-readable format
